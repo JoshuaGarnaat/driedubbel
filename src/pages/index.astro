@@ -1,17 +1,39 @@
 ---
+import { getCollection } from 'astro:content';
+import Card from '../components/Card.astro';
+import '../styles/global.css';
 
+const posts = await getCollection('articles');
+posts.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
 ---
 
 <html lang="en">
-	<head>
+    <head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Driedubbel</title>
+		<meta name="description" content="Code, concepts & deep dives." />
 		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    </head>
+    <body>
+		<main class="home-wrapper">
+			<header class="home-header">
+				<h1>Articles</h1>
+					<p>Code, concepts & deep dives.</p>
+				<div class="article-divider" />
+			</header>
+			<div class="card-grid">
+				{posts.map(post => (
+					<Card
+					title={post.data.title}
+					description={post.data.description}
+					slug={post.slug}
+					pubDate={post.data.pubDate}
+					tags={post.data.tags}
+					/>
+				))}
+			</div>
+		</main>
+    </body>
 </html>

@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import '../../styles/global.css';
+
+export async function getStaticPaths() {
+    const posts = await getCollection('articles');
+    return posts.map(post => ({ params: { slug: post.slug } }));
+}
+
+const { slug } = Astro.params;
+const posts = await getCollection('articles');
+const post = posts.find(p => p.slug === slug);
+if (!post) throw new Error(`Article not found: ${slug}`);
+
+const { Content } = await post.render();
+const { title, description, pubDate, tags } = post.data;
+const formattedDate = new Date(pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric',});
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{title}</title>
+        {description && <meta name="description" content={description} />}
+    </head>
+    <body>
+        <main class="article-wrapper">
+        <a href="/" class="back-link">Home</a>
+        <article>
+            <header class="article-header">
+                <div class="article-meta">
+                    <time>{formattedDate}</time>
+                    {tags?.length > 0 && (
+                        <div class="tags">
+                            {tags.map((tag: string) => <span class="tag">{tag}</span>)}
+                        </div>
+                    )}
+                </div>
+                <h1>{title}</h1>
+                    {description && <p class="article-description">{description}</p>}
+                <div class="article-divider" />
+            </header>
+            <div class="prose">
+                <Content />
+            </div>
+        </article>
+        </main>
+    </body>
+</html>
