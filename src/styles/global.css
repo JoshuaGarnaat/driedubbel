@@ -207,11 +207,17 @@
     .prose h3 { margin: 2rem 0 0.75rem; }
     .prose p  { margin: 0 0 1.5rem; }
 
-    .prose ul,
+    .prose ul {
+        padding-left: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: var(--text);
+        list-style-type: disc;
+    }
     .prose ol {
         padding-left: 1.5rem;
         margin-bottom: 1.5rem;
         color: var(--text);
+        list-style-type: decimal;
     }
 
     .prose li { margin-bottom: 0.4rem; }
@@ -241,6 +247,10 @@
         color: var(--heading);
         font-weight: 500;
         border-bottom-color: var(--accent);
+    }
+
+    .prose pre {
+        @apply max-w-full overflow-x-auto rounded-lg p-4 text-sm bg-gray-800 text-white;
     }
 
     /* Tags */

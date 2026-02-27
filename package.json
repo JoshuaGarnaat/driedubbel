@@ -11,7 +11,10 @@
   "dependencies": {
     "@fontsource/libre-baskerville": "^5.2.10",
     "@fontsource/outfit": "^5.2.8",
-    "astro": "^5.17.1"
+    "astro": "^5.17.1",
+    "katex": "^0.16.33",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.27",
